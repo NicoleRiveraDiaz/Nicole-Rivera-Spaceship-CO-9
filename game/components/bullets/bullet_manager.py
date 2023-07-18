@@ -2,7 +2,7 @@ from game.components.bullets.bullet import BULLET_ENEMY
 
 from game.utils.constants import ENEMY_TYPE
 
-Class BulletManager:
+class Bulletmanager:
     def __init__(self):
         self.enemy_bullets = []
 

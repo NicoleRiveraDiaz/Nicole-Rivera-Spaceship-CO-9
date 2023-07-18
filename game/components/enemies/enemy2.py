@@ -15,6 +15,7 @@ class EnemyZigzag(Sprite):
 
     def __init__(self):
         super().__init__()
+        self.type = ENEMY_TYPE
         self.image = pygame.transform.scale(Enemy_2, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.x = random.choice(self.X_POS_LIST)
