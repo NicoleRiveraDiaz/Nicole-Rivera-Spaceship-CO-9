@@ -15,6 +15,7 @@ class Game:
         self.y_pos_bg = 0
         self.player = Spaceship()
         self.enemy_manager = EnemyManager()
+        self.bullet_manager = BulletManager()
                 
 
     def run(self):

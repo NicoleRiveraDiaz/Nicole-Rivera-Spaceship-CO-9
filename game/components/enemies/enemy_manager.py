@@ -121,7 +121,6 @@ class EnemyManager:
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Juego de Enemigos")
 
     enemy_1_image_path = os.path.join("images", "enemy_1.png")
     enemy_2_image_path = os.path.join("images", "enemy_2.png")

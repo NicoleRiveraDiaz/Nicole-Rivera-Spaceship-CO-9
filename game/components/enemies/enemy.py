@@ -6,16 +6,16 @@ from game.utils.constants import Enemy_1
 
 
 
-
+Class Enemy(Sprite):
 LEFT = "left"
 RIGHT = "right"
-Class Enemy(Sprite):
 X_POS_LISIT = [x_pos for x_pos in range(50, SCREEN_WIDTH,50)]
 Y_POS = 20
 SPEED_X = 5
 SPEED_Y = 3
 
 def __init__(self):
+    self.type = ENEMY_TYPE
     self.image = pygame.transform.scale(Enemy_1, (50,50))
     self.rect = self.image.get_rect()
     self.rect.x = random.choice(self.X_POS_LIST)
@@ -28,8 +28,11 @@ def __init__(self):
     self.move_x = random.randint(30, 100)
     self.moving_index = 0
 
-def update(self, enemies):
+    self.shootin_time = random.randit(30, 50)
+
+def update(self, enemies, bullet_manager):
     self.rect.y += self.speed_y
+    self.shoot(bullet_manager)
     if self.movement == RIGHT:
         self.rect.x += self.speed_x
     else:
@@ -55,6 +58,13 @@ def update(self, enemies):
                     self.movement = LEFT
                 else:
                     self.mmovement = RIGHT
+
+    def shoot(self):
+        current_time = pygame.time.get_ticks()
+        if self.shooting_time <= current_time
+        bullet_manager.add_bullet(self)
+        self.shooting_time += current_time + random.randit
+
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
