@@ -1,4 +1,4 @@
-from tkinter import Menu
+from game.components.menu import Menu
 import pygame
 from game.utils.constants import BG, FONT_STYLE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 from game.components.spaceship import Spaceship
@@ -28,7 +28,6 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.running = True
-        self.playing = True
         while self.running:
             if not self.playing:
                 self.show_menu()

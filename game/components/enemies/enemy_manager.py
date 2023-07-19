@@ -1,3 +1,4 @@
+from ast import main
 import os
 import random
 import pygame
@@ -242,4 +243,4 @@ if __name__ == "__main__":
     main()
 
 def reset(self):
-
+    pass
