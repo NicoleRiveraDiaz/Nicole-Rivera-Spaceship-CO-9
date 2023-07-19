@@ -135,22 +135,25 @@ class EnemyManager:
         for enemy in self.enemies:
             enemy.draw(screen)
 
-def main():
-    pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    def reset(self):
+        self.enemies = []
 
-    enemy_1_image_path = os.path.join("images", "enemy_1.png")
-    enemy_2_image_path = os.path.join("images", "enemy_2.png")
+        def main():
+            pygame.init()
+            screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    enemy_manager = EnemyManager()
-    
-    clock = pygame.time.Clock()
-    running = True
+            enemy_1_image_path = os.path.join("images", "enemy_1.png")
+            enemy_2_image_path = os.path.join("images", "enemy_2.png")
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+            enemy_manager = EnemyManager()
+            
+            clock = pygame.time.Clock()
+            running = True
+
+            while running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
 
 class BulletManager:
     def __init__(self):
@@ -165,6 +168,9 @@ class BulletManager:
     def draw(self, screen):
         for bullet in self.bullets:
             bullet.draw(screen)
+
+    def reset(self):
+        self.enemies = []
 
     def add_bullet(self, bullet):
         self.bullets.append(bullet)
@@ -234,4 +240,6 @@ class Game():
 
 if __name__ == "__main__":
     main()
+
+def reset(self):
 

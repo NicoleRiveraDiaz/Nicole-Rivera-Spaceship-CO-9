@@ -2,12 +2,12 @@ import random
 import pygame
 from pygame.sprite import Sprite
 
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, Enemy_2
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, Enemy_2, ENEMY_TYPE
 
 LEFT = "left"
 RIGHT = "right"
 
-class EnemyZigzag(Sprite):
+class Enemy2(Sprite):
     X_POS_LIST = [x_pos for x_pos in range(50, SCREEN_WIDTH, 50)]
     Y_POS = 20
     SPEED_X = 5
@@ -28,7 +28,7 @@ class EnemyZigzag(Sprite):
         self.move_x = random.randint(30, 100)
         self.moving_index = 0
 
-    def update(self, enemies):
+    def update(self, enemies, bulletmanager):
         self.rect.y += self.speed_y
         if self.movement == RIGHT:
             self.rect.x += self.speed_x
