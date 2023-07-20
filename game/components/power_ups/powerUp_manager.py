@@ -31,4 +31,4 @@ class PowerUpManager:
     def reset(self):
         self.power_ups = []
         now = pygame.time.get_ticks() 
-        self.when_appears = now + random.randint(10000, 15000 )
+        self.when_appears = now + random.randint(10000, 15000)

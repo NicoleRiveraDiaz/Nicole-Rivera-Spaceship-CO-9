@@ -36,7 +36,7 @@ class Enemy(Sprite):
 
     def update(self, enemies, bullet_manager):
         self.rect.y += self.speed_y
-        self.shoot(bullet_manager)
+        self.shoot(bullet_manager, BulletPlayer)
         if self.movement == RIGHT:
             self.rect.x += self.speed_x
         else:
