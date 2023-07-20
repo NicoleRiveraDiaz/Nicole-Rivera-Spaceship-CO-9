@@ -14,16 +14,17 @@ class Spaceship(pygame.sprite.Sprite):
     X_POS = (SCREEN_WIDTH // 2) - 40
     Y_POS = 500
 
-    def __init__(self):
-        super().__init__()
+    def init(self):
+        super().init()
         self.type = PLAYER_TYPE
-        self.image = pygame.transform.scale(self.image, (40, 60))
+        self.image = pygame.transform.scale(SPACESHIP, (40, 60))
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.power_up_type = DEFAULT_TYPE
         self.power_up_time_up = 0
         self.bullets = pygame.sprite.Group()
+        self.power_up_count = 3
 
     def update(self, user_input):
         if user_input[pygame.K_LEFT]:
@@ -38,15 +39,19 @@ class Spaceship(pygame.sprite.Sprite):
         if user_input[pygame.K_x]:
             self.shoot_bullet()
 
-        self.bullets.update()
+        if user_input[pygame.K_t] and self.power_up_count > 0:
+            self.activate_power_up()
+
+        self.update_power_up()
 
     def draw(self, screen):
         self.bullets.draw(screen)
-        screen.blit(self.image, (self.rect.x, self.rect.y))
         if self.rect.left < 0:
-            screen.blit(self.image, (SCREEN_WIDTH + left.rect.x,))
-        if self.rect.right > SCREEN_WIDTH:
-            screen.blit(self.image, (self.rect.x - SCREEN_WIDTH...))
+            screen.blit(self.image, (SCREEN_WIDTH + self.rect.x, self.rect.y))
+        elif self.rect.right > SCREEN_WIDTH:
+            screen.blit(self.image, (self.rect.x - SCREEN_WIDTH, self.rect.y))
+        else:
+            screen.blit(self.image, (self.rect.x, self.rect.y))
 
     def move_left(self):
         if self.rect.left > 0:
@@ -72,6 +77,15 @@ class Spaceship(pygame.sprite.Sprite):
         bullet = BulletPlayer(self.rect.centerx, self.rect.top)
         self.bullets.add(bullet)
 
+    def activate_power_up(self):
+        self.power_up_count -= 1
+        self.power_up_time_up = pygame.time.get_ticks() + 10000  # 10 segundos de duración
+        self.power_up_type = "powerx2"
+
+    def update_power_up(self):
+        if self.power_up_type == "powerx2" and pygame.time.get_ticks() > self.power_up_time_up:
+            self.power_up_type = DEFAULT_TYPE
+
     def on_pick_power(self, time_up, type, image):
         self.image = pygame.transform.scale(image, (self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT)) 
         self.power_up_time_up = time_up
@@ -80,15 +94,15 @@ class Spaceship(pygame.sprite.Sprite):
     def draw_power_up(self, game):
         if self.power_up_type != DEFAULT_TYPE:
             time_left = round((self.power_up_time_up - pygame.time.get_ticks()) / 1000, 2)
-            if time_left >= 0
-                self.menu.draw(game.screen, f{self.power_up_type.capitalize()}" is enabled for {time_left} seconds", y=50, color=(255, 255, 255))
+            if time_left >= 0:
+               self.menu.draw(game.screen, f"{self.power_up_type.capitalize()} is enabled for {time_left} seconds", y=50, color=(255, 255, 255))
             else:
                 self.power_up_type = DEFAULT_TYPE
-                self.image = pygame.transform.scale(SPACESHIP, (self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT)) 
+                self.image = pygame.transform.scale(SPACESHIP, (self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT))
 
 class BulletPlayer(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__()
+    def init(self, x, y):
+        super().init()
         self.image = pygame.image.load("bullet_1.png")
         self.rect = self.image.get_rect()
         self.rect.centerx = x
@@ -137,7 +151,10 @@ def main():
 
         hits = pygame.sprite.groupcollide(enemy_ships, spaceship.bullets, True, True)
         if hits:
-            score += len(hits)
+            if spaceship.power_up_type == "powerx2":
+                score += len(hits) * 2
+            else:
+                score += len(hits)
 
         screen.fill((0, 0, 0))
         spaceship.draw(screen)
@@ -146,8 +163,7 @@ def main():
         pygame.display.flip()
         clock.tick(60)
 
-if __name__ == "__main__":
+if __name__ == "main":
     main()
-
 
 

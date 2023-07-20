@@ -1,4 +1,5 @@
 import random
+import pygame
 from pygame.sprite import Sprite
 
 from game.utils.constants import ENEMY_1, SCREEN_WIDTH, SCREEN_HEIGHT, ENEMY_TYPE
@@ -40,29 +41,29 @@ class Enemy(Sprite):
         if self.rect.y <= SCREEN_HEIGHT:
             enemies.remove(self)
 
-        def update_movement(self):
-            print(self.movement)
-            print(self.move_x)
-            self.moving_index += 1
-            if self.rect.right >= SCREEN_WIDTH:
-                self.movement = "LEFT"
-            elif self.rect.left <= 0:
-                self.movement = "RIGHT"
+    def update_movement(self):
+        print(self.movement)
+        print(self.move_x)
+        self.moving_index += 1
+        if self.rect.right >= SCREEN_WIDTH:
+            self.movement = "LEFT"
+        elif self.rect.left <= 0:
+            self.movement = "RIGHT"
 
-            if self.moving_index >= self.move_x:
-                    self.move_x = 0
-                    self.movement = "LEFT" if self.movement == "RIGHT" else "RIGHT"
-                    if self.movement == "RIGHT":
-                        self.movement = "LEFT"
-                    else:
-                        self.mmovement = "RIGHT"
+        if self.moving_index >= self.move_x:
+                self.move_x = 0
+                self.movement = "LEFT" if self.movement == "RIGHT" else "RIGHT"
+                if self.movement == "RIGHT":
+                    self.movement = "LEFT"
+                else:
+                    self.mmovement = "RIGHT"
 
-        def shoot(self, pygame, bullet_manager):
-            current_time = pygame.time.get_ticks()
-            if self.shooting_time <= current_time:
-                bullet_manager.add_bullet(self)
-                self.shooting_time += current_time + random.randit (30, 50)
+    def shoot(self, bullet_manager):
+        current_time = pygame.time.get_ticks()
+        if self.shooting_time <= current_time:
+            bullet_manager.add_bullet(self)
+            self.shooting_time += current_time + random.randit (30, 50)
 
-        def draw(self, screen):
-            screen.blit(self.image, (self.rect.x, self.rect.y))
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 

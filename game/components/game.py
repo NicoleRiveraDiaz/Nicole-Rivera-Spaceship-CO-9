@@ -4,9 +4,10 @@ from game.utils.constants import BG, FONT_STYLE, ICON, SCREEN_HEIGHT, SCREEN_WID
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
+from game.components.power_ups.powerUp_manager import PowerUpManager
 
 class Game:
-    def __init__(self):
+    def _init_(self):
         pygame.init()
         pygame.display.set_caption(TITLE)
         pygame.display.set_icon(ICON)
@@ -20,7 +21,7 @@ class Game:
         self.player = Spaceship()
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
-        self.power_up_manager = PowerUpManager
+        self.power_up_manager = PowerUpManager()
         self.menu = Menu("Press any key to start...")
         self.score = 0
         self.death_count = 0
@@ -62,10 +63,10 @@ class Game:
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
-        self.palyer.draw_power_up(self)
+        self.player.draw_power_up(self.screen)  
         self.enemy_manager.draw(self.screen)  
         self.bullet_manager.draw(self.screen)
-        self.score.draw(self.screen) 
+        self.draw_score()  
         pygame.display.update()
         pygame.display.flip()  
 
@@ -101,7 +102,7 @@ class Game:
     def reset(self):
         self.bullet_manager.reset()
         self.enemy_manager.reset()
-        self.power_up_manager.reset ()
+        self.power_up_manager.reset()
         self.score.reset()
         self.player.reset()
 
