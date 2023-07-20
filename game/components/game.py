@@ -20,7 +20,7 @@ class Game:
         self.player = Spaceship()
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
-
+        self.power_up_manager = PowerUpManager
         self.menu = Menu("Press any key to start...")
         self.score = 0
         self.death_count = 0
@@ -55,17 +55,19 @@ class Game:
         self.player.update(user_input)
         self.enemy_manager.update(self)
         self.bullet_manager.update(self)  
+        self.power_up_manager.update(self)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
+        self.palyer.draw_power_up(self)
         self.enemy_manager.draw(self.screen)  
         self.bullet_manager.draw(self.screen)
-        self.draw_score() 
+        self.score.draw(self.screen) 
         pygame.display.update()
-        pygame.display.flip()
+        pygame.display.flip()  
 
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 22)
@@ -95,5 +97,12 @@ class Game:
     def on_close(self):
         self.playing = False
         self.running = False
+
+    def reset(self):
+        self.bullet_manager.reset()
+        self.enemy_manager.reset()
+        self.power_up_manager.reset ()
+        self.score.reset()
+        self.player.reset()
 
     

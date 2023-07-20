@@ -22,7 +22,7 @@ class Menu:
 
     def draw(self, screen):
         screen.fill((255, 255, 255))
-        self.blit(self.text, self.text_rect)
+        screen.blit(self.text, self.text_rect)
         screen.blit(self.icon, self.icon_rect)
         pygame.display.flip()
 
