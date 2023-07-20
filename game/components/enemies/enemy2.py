@@ -2,7 +2,7 @@ import random
 import pygame
 from pygame.sprite import Sprite
 
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, Enemy_2, ENEMY_TYPE
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, ENEMY_2, ENEMY_TYPE
 
 LEFT = "left"
 RIGHT = "right"
@@ -16,7 +16,7 @@ class Enemy2(Sprite):
     def __init__(self):
         super().__init__()
         self.type = ENEMY_TYPE
-        self.image = pygame.transform.scale(Enemy_2, (50, 50))
+        self.image = pygame.transform.scale(ENEMY_2, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.x = random.choice(self.X_POS_LIST)
         self.rect.y = self.Y_POS
@@ -28,7 +28,7 @@ class Enemy2(Sprite):
         self.move_x = random.randint(30, 100)
         self.moving_index = 0
 
-    def update(self, enemies, bulletmanager):
+    def update(self, enemies):
         self.rect.y += self.speed_y
         if self.movement == RIGHT:
             self.rect.x += self.speed_x

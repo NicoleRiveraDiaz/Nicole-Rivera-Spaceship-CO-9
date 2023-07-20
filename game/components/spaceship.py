@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
-from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT
+from game.utils.constants import SPACESHIP, PLAYER_TYPE, DEFAULT_TYPE, SCREEN_WIDTH, SCREEN_HEIGHT
 
 import sys
 
@@ -16,11 +16,13 @@ class Spaceship(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = SPACESHIP
+        self.type = PLAYER_TYPE
         self.image = pygame.transform.scale(self.image, (40, 60))
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
+        self.power_up_type = DEFAULT_TYPE
+        self.power_up_time_up = 0
         self.bullets = pygame.sprite.Group()
 
     def update(self, user_input):
@@ -41,6 +43,10 @@ class Spaceship(pygame.sprite.Sprite):
     def draw(self, screen):
         self.bullets.draw(screen)
         screen.blit(self.image, (self.rect.x, self.rect.y))
+        if self.rect.left < 0:
+            screen.blit(self.image, (SCREEN_WIDTH + left.rect.x,))
+        if self.rect.right > SCREEN_WIDTH:
+            screen.blit(self.image, (self.rect.x - SCREEN_WIDTH...))
 
     def move_left(self):
         if self.rect.left > 0:
@@ -65,6 +71,20 @@ class Spaceship(pygame.sprite.Sprite):
     def shoot_bullet(self):
         bullet = BulletPlayer(self.rect.centerx, self.rect.top)
         self.bullets.add(bullet)
+
+    def on_pick_power(self, time_up, type, image):
+        self.image = pygame.transform.scale(image, (self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT)) 
+        self.power_up_time_up = time_up
+        self.power_up_type = type 
+
+    def draw_power_up(self, game):
+        if self.power_up_type != DEFAULT_TYPE:
+            time_left = round((self.power_up_time_up - pygame.time.get_ticks()) / 1000, 2)
+            if time_left >= 0
+                self.menu.draw(game.screen, f{self.power_up_type.capitalize()}" is enabled for {time_left} seconds", y=50, color=(255, 255, 255))
+            else:
+                self.power_up_type = DEFAULT_TYPE
+                self.image = pygame.transform.scale(SPACESHIP, (self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT)) 
 
 class BulletPlayer(pygame.sprite.Sprite):
     def __init__(self, x, y):
